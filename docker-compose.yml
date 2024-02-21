@@ -1,4 +1,6 @@
 version: '3'
+volumes:
+  mysql:
 services:
   # 首先下载前端，https://gitee.com/mineadmin/mineadmin-vue
   # 在后端根目录建立mine-ui目录，把前端文件复制过来。
@@ -46,7 +48,11 @@ services:
       - "lower_case_table_names=1"
     image: mysql:5.7
     restart: always
-    # command: "--default-authentication-plugin=mysql_native_password"
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    command: "--default-authentication-plugin=mysql_native_password"
   redis:
     image: redis
     container_name: mineadmin-redis
